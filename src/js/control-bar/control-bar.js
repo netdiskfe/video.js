@@ -60,11 +60,11 @@ ControlBar.prototype.options_ = {
     'remainingTimeDisplay',
     'customControlSpacer',
     'playbackRateMenuButton',
-    'chaptersButton',
-    'descriptionsButton',
-    'subtitlesButton',
-    'captionsButton',
-    'audioTrackButton',
+    // 'chaptersButton',
+    // 'descriptionsButton',
+    // 'subtitlesButton',
+    // 'captionsButton',
+    // 'audioTrackButton',
     'fullscreenToggle'
   ]
 };
