@@ -25,6 +25,11 @@
   display: block;
 }
 
+.vjs-paused .vjs-loading-spinner,
+.vjs-error .vjs-loading-spinner {
+  display: none;
+}
+
 .vjs-loading-spinner:before,
 .vjs-loading-spinner:after {
   content: "";

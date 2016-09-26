@@ -56,3 +56,9 @@
 .vjs-paused .vjs-big-play-button {
   display: block;
 }
+
+.vjs-loading .vjs-big-play-button,
+.vjs-seeking .vjs-big-play-button,
+.vjs-waiting .vjs-big-play-button {
+  display: none;
+}
