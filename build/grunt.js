@@ -136,11 +136,11 @@ module.exports = function(grunt) {
       babel: {
         files: ['src/js/**/*.js'],
         tasks: ['babel:es5']
-      },
-      jshint: {
-        files: ['src/**/*', 'test/unit/**/*.js', 'Gruntfile.js'],
-        tasks: 'jshint'
       }
+      // jshint: {
+      //   files: ['src/**/*', 'test/unit/**/*.js', 'Gruntfile.js'],
+      //   tasks: 'jshint'
+      // }
     },
     connect: {
       dev: {

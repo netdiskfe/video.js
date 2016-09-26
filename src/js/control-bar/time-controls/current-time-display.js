@@ -57,8 +57,15 @@ class CurrentTimeDisplay extends Component {
     const formattedTime = formatTime(time, this.player_.duration());
 
     if (formattedTime !== this.formattedTime_) {
+      this.player_.removeClass('vjs-loading');
       this.formattedTime_ = formattedTime;
+      this.lastUpdateTime_ = +new Date;
       this.contentEl_.innerHTML = `<span class="vjs-control-text">${localizedText}</span> ${formattedTime}`;
+    } else {
+      if ((time <= 0 || (this.lastUpdateTime_ && +new Date - this.lastUpdateTime_ >= 1500)) &&
+        !(this.player_.hasClass('vjs-waiting') || this.player_.hasClass('vjs-seeking'))) {
+        this.player_.addClass('vjs-loading');
+      }
     }
   }
 
