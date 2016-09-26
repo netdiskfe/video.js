@@ -61,15 +61,13 @@ class CurrentTimeDisplay extends Component {
       this.lastUpdateTime_ = +new Date();
       this.formattedTime_ = formattedTime;
       this.contentEl_.innerHTML = `<span class="vjs-control-text">${localizedText}</span> ${formattedTime}`;
-    } else {
-      if (this.player_.hasClass('vjs-playing')) {
-        if (time <= 0 || +new Date() - this.lastUpdateTime_ >= 1500) {
-          this.player_.addClass('vjs-loading');
-        }
-      } else {
-        this.player_.removeClass('vjs-loading');
-        this.lastUpdateTime_ = +new Date();
+    } else if (this.player_.hasClass('vjs-playing')) {
+      if (time <= 0 || +new Date() - this.lastUpdateTime_ >= 1500) {
+        this.player_.addClass('vjs-loading');
       }
+    } else {
+      this.player_.removeClass('vjs-loading');
+      this.lastUpdateTime_ = +new Date();
     }
   }
 
