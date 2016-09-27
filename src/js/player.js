@@ -1231,6 +1231,14 @@ class Player extends Component {
    * @method handleTechTimeUpdate_
    */
   handleTechTimeUpdate_() {
+    if (this.lastCurrentTime !== this.cache_.currentTime) {
+      this.removeClass('vjs-loading');
+    } else if (this.hasClass('vjs-playing')) {
+      this.addClass('vjs-loading');
+    } else {
+      this.removeClass('vjs-loading');
+    }
+    this.lastCurrentTime = this.cache_.currentTime;
     this.trigger('timeupdate');
   }
 
