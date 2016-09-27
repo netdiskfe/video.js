@@ -1232,10 +1232,12 @@ class Player extends Component {
    */
   handleTechTimeUpdate_() {
     if (this.lastCurrentTime !== this.cache_.currentTime) {
+      this.sameCount = 0;
       this.removeClass('vjs-loading');
-    } else if (this.hasClass('vjs-playing')) {
+    } else if (this.hasClass('vjs-playing') && this.sameCount) {
       this.addClass('vjs-loading');
     } else {
+      this.sameCount++;
       this.removeClass('vjs-loading');
     }
     this.lastCurrentTime = this.cache_.currentTime;
