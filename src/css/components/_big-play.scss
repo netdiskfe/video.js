@@ -48,11 +48,14 @@
 // Hide if controls are disabled, the video is playing, or native controls are used.
 .vjs-controls-disabled .vjs-big-play-button,
 .vjs-has-started .vjs-big-play-button,
-.vjs-using-native-controls .vjs-big-play-button,
-.vjs-error .vjs-big-play-button {
+.vjs-using-native-controls .vjs-big-play-button {
   display: none;
 }
 
 .vjs-paused .vjs-big-play-button {
   display: block;
+}
+
+.vjs-error .vjs-big-play-button {
+  display: none;
 }
