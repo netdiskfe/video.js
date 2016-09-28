@@ -787,6 +787,22 @@ class Component {
     return this;
   }
 
+  triggerEvent(event, data={}, bubbles=false, cancelable=false) {
+    let e = null;
+    if (typeof Event === 'function') {
+      e = new Event(event, {
+        bubbles: bubbles,
+        cancelable: cancelable
+      });
+    } else {
+      e = document.createEvent('HTMLEvents');
+      e.initEvent('click', bubbles, cancelable);
+    }
+    e.data = data;
+    this.el_.dispatchEvent(e);
+    return this;
+  }
+
   /**
    * Bind a listener to the component's ready state.
    * Different from event listeners in that if the ready event has already happened

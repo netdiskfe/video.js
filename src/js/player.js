@@ -1231,14 +1231,19 @@ class Player extends Component {
    * @method handleTechTimeUpdate_
    */
   handleTechTimeUpdate_() {
-    if (this.lastCurrentTime !== this.cache_.currentTime) {
-      this.sameCount = 0;
-      this.removeClass('vjs-loading');
-    } else if (this.hasClass('vjs-playing') && this.sameCount) {
-      this.addClass('vjs-loading');
+    if (this.lastCurrentTime === this.cache_.currentTime && this.hasClass('vjs-playing')) {
+      if (this.sameCount && !this.hasClass('vjs-loading')) {
+        this.addClass('vjs-loading');
+        this.tech_.triggerEvent('loadingstart');
+      } else {
+        this.sameCount++;
+      }
     } else {
-      this.sameCount++;
-      this.removeClass('vjs-loading');
+      this.sameCount = 0;
+      if (this.hasClass('vjs-loading')) {
+        this.removeClass('vjs-loading');
+        this.tech_.triggerEvent('loadingend');
+      }
     }
     this.lastCurrentTime = this.cache_.currentTime;
     this.trigger('timeupdate');
