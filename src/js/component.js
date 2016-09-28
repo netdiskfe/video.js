@@ -787,15 +787,17 @@ class Component {
     return this;
   }
 
-  triggerEvent(event, data={}, bubbles=false, cancelable=false) {
+  triggerEvent(event, data = {}, bubbles = false, cancelable = false) {
+    const Event = window.Event;
     let e = null;
+
     if (typeof Event === 'function') {
       e = new Event(event, {
-        bubbles: bubbles,
-        cancelable: cancelable
+        bubbles,
+        cancelable
       });
     } else {
-      e = document.createEvent('HTMLEvents');
+      e = window.document.createEvent('HTMLEvents');
       e.initEvent('click', bubbles, cancelable);
     }
     e.data = data;
