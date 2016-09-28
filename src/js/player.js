@@ -638,7 +638,9 @@ class Player extends Component {
 
     // Listen to all HTML5-defined events and trigger them on the player
     this.on(this.tech_, 'loadstart', this.handleTechLoadStart_);
+    this.on(this.tech_, 'waitstart', this.handleTechWaitStart_);
     this.on(this.tech_, 'waiting', this.handleTechWaiting_);
+    this.on(this.tech_, 'waitend', this.handleTechWaitEnd_);
     this.on(this.tech_, 'canplay', this.handleTechCanPlay_);
     this.on(this.tech_, 'canplaythrough', this.handleTechCanPlayThrough_);
     this.on(this.tech_, 'playing', this.handleTechPlaying_);
@@ -896,6 +898,10 @@ class Player extends Component {
     this.trigger('play');
   }
 
+  handleTechWaitStart_() {
+    this.addClass('vjs-waiting');
+  }
+
   /**
    * Fired whenever the media begins waiting
    *
@@ -905,7 +911,15 @@ class Player extends Component {
   handleTechWaiting_() {
     this.addClass('vjs-waiting');
     this.trigger('waiting');
-    this.one('timeupdate', () => this.removeClass('vjs-waiting'));
+    this.one('timeupdate', () => {
+      if (typeof this.tech_.el_.waiting === 'undefined') {
+        this.removeClass('vjs-waiting');
+      }
+    });
+  }
+
+  handleTechWaitEnd_() {
+    this.removeClass('vjs-waiting');
   }
 
   /**
@@ -1231,21 +1245,6 @@ class Player extends Component {
    * @method handleTechTimeUpdate_
    */
   handleTechTimeUpdate_() {
-    if (this.lastCurrentTime === this.cache_.currentTime && this.hasClass('vjs-playing')) {
-      if (this.sameCount && !this.hasClass('vjs-loading')) {
-        this.addClass('vjs-loading');
-        this.tech_.triggerEvent('loadingstart');
-      } else {
-        this.sameCount++;
-      }
-    } else {
-      this.sameCount = 0;
-      if (this.hasClass('vjs-loading')) {
-        this.removeClass('vjs-loading');
-        this.tech_.triggerEvent('loadingend');
-      }
-    }
-    this.lastCurrentTime = this.cache_.currentTime;
     this.trigger('timeupdate');
   }
 
