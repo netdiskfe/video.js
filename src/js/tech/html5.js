@@ -1200,6 +1200,9 @@ Html5.supportsNativeTextTracks = function() {
     supportsTextTracks = false;
   }
 
+  // always false
+  supportsTextTracks = false;
+
   return supportsTextTracks;
 };
 

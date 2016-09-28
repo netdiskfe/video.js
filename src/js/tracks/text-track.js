@@ -53,6 +53,15 @@ const parseCues = function(srcContent, track) {
   parser.flush();
 };
 
+const convertSrtToVtt = function(res) {
+  const reg = /^(?:\s)*((?:\d{2}:)+\d{2}),(\d{3})(?:\s)*-->(?:\s)*((?:\d{2}:)+\d{2}),(\d{3})(?:\s)*$/mgi;
+  if (res.indexOf('WEBVTT') === -1) {
+    res = res.replace(reg, '$1.$2 --> $3.$4');
+    res = 'WEBVTT\r\n\r\n' + res;
+  }
+  return res;
+};
+
 /**
  * load a track from a  specifed url
  *
@@ -73,6 +82,8 @@ const loadTrack = function(src, track) {
     if (err) {
       return log.error(err, response);
     }
+
+    responseBody = convertSrtToVtt(responseBody);
 
     track.loaded_ = true;
 

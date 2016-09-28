@@ -62,7 +62,7 @@ ControlBar.prototype.options_ = {
     // 'playbackRateMenuButton',
     // 'chaptersButton',
     // 'descriptionsButton',
-    // 'subtitlesButton',
+    'subtitlesButton',
     // 'captionsButton',
     // 'audioTrackButton',
     'fullscreenToggle'
