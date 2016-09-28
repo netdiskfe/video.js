@@ -55,6 +55,7 @@ const parseCues = function(srcContent, track) {
 
 const convertSrtToVtt = function(res) {
   const reg = /^(?:\s)*((?:\d{2}:)+\d{2}),(\d{3})(?:\s)*-->(?:\s)*((?:\d{2}:)+\d{2}),(\d{3})(?:\s)*$/mgi;
+
   if (res.indexOf('WEBVTT') === -1) {
     res = res.replace(reg, '$1.$2 --> $3.$4');
     res = 'WEBVTT\r\n\r\n' + res;
