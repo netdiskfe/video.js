@@ -2,8 +2,8 @@
   display: none;
   position: absolute;
   bottom: 0;
-  width: 10em;
-  left: -3em; // (Width of vjs-menu - width of button) / 2
+  width: 25em;
+  right: 0; // (Width of vjs-menu - width of button) / 2
   height: 0em;
   margin-bottom: 1.5em;
   border-top-color: rgba($primary-background-color, $primary-background-transparency); // Same as ul background
