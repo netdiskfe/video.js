@@ -16,8 +16,8 @@ function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId
       <div class="vjs-tracksettings">
         <div class="vjs-tracksettings-colors">
           <fieldset class="vjs-fg-color vjs-tracksetting">
-            <legend>Text</legend>
-            <label class="vjs-label" for="captions-foreground-color-${uniqueId}">Color</label>
+            <legend>${this.localize('Text')}</legend>
+            <label class="vjs-label" for="captions-foreground-color-${uniqueId}">${this.localize('Color')}</label>
             <select id="captions-foreground-color-${uniqueId}">
               <option value="#FFF" selected>White</option>
               <option value="#000">Black</option>
@@ -29,16 +29,16 @@ function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId
               <option value="#0FF">Cyan</option>
             </select>
             <span class="vjs-text-opacity vjs-opacity">
-              <label class="vjs-label" for="captions-foreground-opacity-${uniqueId}">Transparency</label>
+              <label class="vjs-label" for="captions-foreground-opacity-${uniqueId}">${this.localize('Transparency')}</label>
               <select id="captions-foreground-opacity-${uniqueId}">
                 <option value="1" selected>Opaque</option>
-                <option value="0.5">Semi-Opaque</option>
+                <option value="0.5">Semi-Transparent</option>
               </select>
             </span>
           </fieldset>
           <fieldset class="vjs-bg-color vjs-tracksetting">
-            <legend>Background</legend>
-            <label class="vjs-label" for="captions-background-color-${uniqueId}">Color</label>
+            <legend>${this.localize('Background')}</legend>
+            <label class="vjs-label" for="captions-background-color-${uniqueId}">${this.localize('Color')}</label>
             <select id="captions-background-color-${uniqueId}">
               <option value="#000" selected>Black</option>
               <option value="#FFF">White</option>
@@ -50,17 +50,17 @@ function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId
               <option value="#0FF">Cyan</option>
             </select>
             <span class="vjs-bg-opacity vjs-opacity">
-              <label class="vjs-label" for="captions-background-opacity-${uniqueId}">Transparency</label>
+              <label class="vjs-label" for="captions-background-opacity-${uniqueId}">${this.localize('Transparency')}</label>
               <select id="captions-background-opacity-${uniqueId}">
-                <option value="1" selected>Opaque</option>
-                <option value="0.5">Semi-Transparent</option>
+                <option value="0.5" selected>Semi-Transparent</option>
+                <option value="1">Opaque</option>
                 <option value="0">Transparent</option>
               </select>
             </span>
           </fieldset>
           <fieldset class="window-color vjs-tracksetting">
-            <legend>Window</legend>
-            <label class="vjs-label" for="captions-window-color-${uniqueId}">Color</label>
+            <legend>${this.localize('Window')}</legend>
+            <label class="vjs-label" for="captions-window-color-${uniqueId}">${this.localize('Color')}</label>
             <select id="captions-window-color-${uniqueId}">
               <option value="#000" selected>Black</option>
               <option value="#FFF">White</option>
@@ -72,7 +72,7 @@ function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId
               <option value="#0FF">Cyan</option>
             </select>
             <span class="vjs-window-opacity vjs-opacity">
-              <label class="vjs-label" for="captions-window-opacity-${uniqueId}">Transparency</label>
+              <label class="vjs-label" for="captions-window-opacity-${uniqueId}">${this.localize('Transparency')}</label>
               <select id="captions-window-opacity-${uniqueId}">
                 <option value="0" selected>Transparent</option>
                 <option value="0.5">Semi-Transparent</option>
@@ -83,7 +83,7 @@ function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId
         </div> <!-- vjs-tracksettings-colors -->
         <div class="vjs-tracksettings-font">
           <div class="vjs-font-percent vjs-tracksetting">
-            <label class="vjs-label" for="captions-font-size-${uniqueId}">Font Size</label>
+            <label class="vjs-label" for="captions-font-size-${uniqueId}">${this.localize('Font Size')}</label>
             <select id="captions-font-size-${uniqueId}">
               <option value="0.50">50%</option>
               <option value="0.75">75%</option>
@@ -97,7 +97,7 @@ function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId
             </select>
           </div>
           <div class="vjs-edge-style vjs-tracksetting">
-            <label class="vjs-label" for="captions-edge-style-${uniqueId}">Text Edge Style</label>
+            <label class="vjs-label" for="captions-edge-style-${uniqueId}">${this.localize('Text Edge Style')}</label>
             <select id="captions-edge-style-${uniqueId}">
               <option value="none" selected>None</option>
               <option value="raised">Raised</option>
@@ -107,7 +107,7 @@ function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId
             </select>
           </div>
           <div class="vjs-font-family vjs-tracksetting">
-            <label class="vjs-label" for="captions-font-family-${uniqueId}">Font Family</label>
+            <label class="vjs-label" for="captions-font-family-${uniqueId}">${this.localize('Font Family')}</label>
             <select id="captions-font-family-${uniqueId}">
               <option value="proportionalSansSerif" selected>Proportional Sans-Serif</option>
               <option value="monospaceSansSerif">Monospace Sans-Serif</option>
@@ -118,10 +118,16 @@ function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId
               <option value="small-caps">Small Caps</option>
             </select>
           </div>
+        </div> <!-- vjs-tracksettings-time -->
+        <div class="vjs-tracksettings-time">
+          <div class="vjs-time-ajust vjs-tracksetting">
+            <label class="vjs-label" for="captions-time-adjust-${uniqueId}">${this.localize('Time Ajust')}</label>
+            <input type="number" id="captions-time-adjust-${uniqueId}" step="0.5" value="0" />&nbsp;${this.localize('seconds')}
+          </div>
         </div> <!-- vjs-tracksettings-font -->
         <div class="vjs-tracksettings-controls">
-          <button class="vjs-default-button">Defaults</button>
-          <button class="vjs-done-button">Done</button>
+          <button class="vjs-default-button">${this.localize('Defaults')}</button>
+          <button class="vjs-done-button">${this.localize('Done')}</button>
         </div>
       </div> <!-- vjs-tracksettings -->
     </div> <!--  role="document" -->
@@ -195,6 +201,7 @@ class TextTrackSettings extends Component {
       this.$('.vjs-edge-style select').selectedIndex = 0;
       this.$('.vjs-font-family select').selectedIndex = 0;
       this.$('.vjs-font-percent select').selectedIndex = 2;
+      this.$('.vjs-time-ajust input').value = 0;
       this.updateDisplay();
     }));
 
@@ -207,6 +214,7 @@ class TextTrackSettings extends Component {
     Events.on(this.$('.vjs-font-percent select'), 'change', Fn.bind(this, this.updateDisplay));
     Events.on(this.$('.vjs-edge-style select'), 'change', Fn.bind(this, this.updateDisplay));
     Events.on(this.$('.vjs-font-family select'), 'change', Fn.bind(this, this.updateDisplay));
+    Events.on(this.$('.vjs-time-ajust input'), 'change', Fn.bind(this, this.updateDisplay));
 
     if (this.options_.persistTextTrackSettings) {
       this.restoreSettings();
@@ -226,7 +234,7 @@ class TextTrackSettings extends Component {
 
     return super.createEl('div', {
       className: 'vjs-caption-settings vjs-modal-overlay',
-      innerHTML: captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId),
+      innerHTML: captionOptionsMenuTemplate.call(this, uniqueId, dialogLabelId, dialogDescriptionId),
       tabIndex: -1
     }, {
       'role': 'dialog',
@@ -260,9 +268,11 @@ class TextTrackSettings extends Component {
     const windowColor = getSelectedOptionValue(this.$('.window-color > select'));
     const windowOpacity = getSelectedOptionValue(this.$('.vjs-window-opacity > select'));
     const fontPercent = window.parseFloat(getSelectedOptionValue(this.$('.vjs-font-percent > select')));
+    const timeAjust = window.parseFloat(this.$('.vjs-time-ajust > input').value);
 
     const result = {
       fontPercent,
+      timeAjust,
       fontFamily,
       textOpacity,
       windowColor,
@@ -279,6 +289,12 @@ class TextTrackSettings extends Component {
       }
     }
     return result;
+  }
+
+  getTimeAjust() {
+    const timeAjust = window.parseFloat(this.$('.vjs-time-ajust > input').value);
+
+    return timeAjust;
   }
 
   /**
@@ -313,6 +329,14 @@ class TextTrackSettings extends Component {
     }
 
     setSelectedOption(this.$('.vjs-font-percent > select'), fontPercent);
+
+    let timeAjust = values.timeAjust;
+
+    if (timeAjust) {
+      timeAjust = timeAjust.toFixed(1);
+    }
+
+    this.$('.vjs-time-ajust > input').value = timeAjust;
   }
 
   /**

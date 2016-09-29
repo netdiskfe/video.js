@@ -2714,7 +2714,9 @@ class Player extends Component {
    */
   addRemoteTextTrack(options) {
     if (this.tech_) {
-      return this.tech_.addRemoteTextTrack(options);
+      return this.tech_.addRemoteTextTrack(mergeOptions(options, {
+        player: this
+      }));
     }
   }
 

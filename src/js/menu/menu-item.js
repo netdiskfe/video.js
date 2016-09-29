@@ -69,13 +69,13 @@ class MenuItem extends ClickableComponent {
         this.el_.setAttribute('aria-checked', 'true');
         // aria-checked isn't fully supported by browsers/screen readers,
         // so indicate selected state to screen reader in the control text.
-        this.controlText(', selected');
+        this.controlText('selected');
       } else {
         this.removeClass('vjs-selected');
         this.el_.setAttribute('aria-checked', 'false');
         // Indicate un-selected state to screen reader
         // Note that a space clears out the selected state text
-        this.controlText(' ');
+        this.controlText('');
       }
     }
   }

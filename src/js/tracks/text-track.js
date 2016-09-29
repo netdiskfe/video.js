@@ -156,6 +156,7 @@ class TextTrack extends Track {
     const tt = super(settings);
 
     tt.tech_ = settings.tech;
+    tt.player_ = settings.player;
 
     if (browser.IS_IE8) {
       for (const prop in TextTrack.prototype) {
@@ -234,9 +235,11 @@ class TextTrack extends Track {
           return activeCues;
         }
 
-        const ct = this.tech_.currentTime();
+        let ct = this.tech_.currentTime();
+        const timeAjust = this.player_.textTrackSettings.getTimeAjust() || 0;
         const active = [];
 
+        ct += timeAjust;
         for (let i = 0, l = this.cues.length; i < l; i++) {
           const cue = this.cues[i];
 

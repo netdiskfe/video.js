@@ -29,7 +29,7 @@ class CaptionSettingsMenuItem extends TextTrackMenuItem {
 
     super(player, options);
     this.addClass('vjs-texttrack-settings');
-    this.controlText(', opens ' + options.kind + ' settings dialog');
+    this.controlText('opens ' + options.kind + ' settings dialog');
   }
 
   /**
