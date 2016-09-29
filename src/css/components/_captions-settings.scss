@@ -1,6 +1,6 @@
 .vjs-caption-settings {
   position: relative;
-  top: 1em;
+  top: 5em;
   background-color: $primary-background-color;
   background-color: rgba($primary-background-color, 0.75);
   color: $primary-foreground-color;
@@ -8,6 +8,7 @@
   padding: 0.5em;
   height: 16em;
   font-size: 12px;
+  text-align: left;
   width: 47em;
 }
 
@@ -48,6 +49,7 @@
   display: block;
   width: 100px;
   margin-bottom: 5px;
+  color: #fff;
 }
 
 .vjs-caption-settings .vjs-tracksetting span {
