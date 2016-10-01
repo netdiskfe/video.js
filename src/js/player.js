@@ -660,6 +660,7 @@ class Player extends Component {
     this.on(this.tech_, 'stalled', this.handleTechStalled_);
     this.on(this.tech_, 'loadedmetadata', this.handleTechLoadedMetaData_);
     this.on(this.tech_, 'loadeddata', this.handleTechLoadedData_);
+    this.on(this.tech_, 'loaderror', this.handleTechLoadError_);
     this.on(this.tech_, 'timeupdate', this.handleTechTimeUpdate_);
     this.on(this.tech_, 'ratechange', this.handleTechRateChange_);
     this.on(this.tech_, 'volumechange', this.handleTechVolumeChange_);
@@ -900,6 +901,7 @@ class Player extends Component {
 
   handleTechWaitStart_() {
     this.addClass('vjs-waiting');
+    this.trigger('waitstart');
   }
 
   /**
@@ -920,6 +922,7 @@ class Player extends Component {
 
   handleTechWaitEnd_() {
     this.removeClass('vjs-waiting');
+    this.trigger('waitend');
   }
 
   /**
@@ -1236,6 +1239,10 @@ class Player extends Component {
    */
   handleTechLoadedData_() {
     this.trigger('loadeddata');
+  }
+
+  handleTechLoadError_() {
+    this.trigger('loaderror');
   }
 
   /**
