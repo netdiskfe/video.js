@@ -67,19 +67,19 @@ function videojs(id, options, ready) {
     }
 
     // If a player instance has already been created for this ID return it.
-    if (videojs.getPlayers()[id]) {
+    // if (videojs.getPlayers()[id]) {
 
-      // If options or ready funtion are passed, warn
-      if (options) {
-        log.warn(`Player "${id}" is already initialised. Options will not be applied.`);
-      }
+    //   // If options or ready funtion are passed, warn
+    //   if (options) {
+    //     log.warn(`Player "${id}" is already initialised. Options will not be applied.`);
+    //   }
 
-      if (ready) {
-        videojs.getPlayers()[id].ready(ready);
-      }
+    //   if (ready) {
+    //     videojs.getPlayers()[id].ready(ready);
+    //   }
 
-      return videojs.getPlayers()[id];
-    }
+    //   return videojs.getPlayers()[id];
+    // }
 
     // Otherwise get element for ID
     tag = Dom.getEl(id);
