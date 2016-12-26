@@ -660,7 +660,8 @@ class Player extends Component {
     this.on(this.tech_, 'stalled', this.handleTechStalled_);
     this.on(this.tech_, 'loadedmetadata', this.handleTechLoadedMetaData_);
     this.on(this.tech_, 'loadeddata', this.handleTechLoadedData_);
-    this.on(this.tech_, 'loaderror', this.handleTechLoadError_);
+    this.on(this.tech_, 'segmentloaderror', this.handleTechSegmentLoadError_);
+    this.on(this.tech_, 'segmentloadsuccess', this.handleTechSegmentLoadSuccess_);
     this.on(this.tech_, 'timeupdate', this.handleTechTimeUpdate_);
     this.on(this.tech_, 'ratechange', this.handleTechRateChange_);
     this.on(this.tech_, 'volumechange', this.handleTechVolumeChange_);
@@ -1241,8 +1242,24 @@ class Player extends Component {
     this.trigger('loadeddata');
   }
 
-  handleTechLoadError_() {
-    this.trigger('loaderror');
+  /**
+   * Fires when loaded a segment failed
+   *
+   * @private
+   * @method handleTechSegmentLoadError_
+   */
+  handleTechSegmentLoadError_(event) {
+    this.trigger('segmentloaderror', event.data);
+  }
+
+  /**
+   * Fires when loaded a segment success
+   *
+   * @private
+   * @method handleTechSegmentLoadSuccess_
+   */
+  handleTechSegmentLoadSuccess_(event) {
+    this.trigger('segmentloadsuccess', event.data);
   }
 
   /**
