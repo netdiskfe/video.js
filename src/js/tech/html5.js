@@ -482,8 +482,14 @@ class Html5 extends Tech {
    * @method setCurrentTime
    */
   setCurrentTime(seconds) {
+    const self = this;
+
     try {
-      this.el_.currentTime = seconds;
+      self.el_.currentTime = seconds;
+      // it`s strange that we must seek twice to ensure seek successful
+      setTimeout(function() {
+        self.el_.currentTime = seconds;
+      }, 0);
     } catch (e) {
       log(e, 'Video is not ready. (Video.js)');
       // this.warning(VideoJS.warnings.videoNotReady);

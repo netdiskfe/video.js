@@ -969,6 +969,13 @@ class Player extends Component {
    * @method handleTechSeeking_
    */
   handleTechSeeking_() {
+    if (!this.options_.playerOptions.canSeek_) {
+      const delta = this.techGet_('currentTime') - this.cache_.supposedCurrentTime;
+
+      if (Math.abs(delta) > 0.01) {
+        this.techCall_('setCurrentTime', this.cache_.supposedCurrentTime);
+      }
+    }
     this.addClass('vjs-seeking');
     this.trigger('seeking');
   }
@@ -1033,6 +1040,7 @@ class Player extends Component {
    * @method handleTechEnded_
    */
   handleTechEnded_() {
+    this.cache_.supposedCurrentTime = 0;
     this.addClass('vjs-ended');
     if (this.options_.loop) {
       this.currentTime(0);
@@ -1269,6 +1277,9 @@ class Player extends Component {
    * @method handleTechTimeUpdate_
    */
   handleTechTimeUpdate_() {
+    if (!this.options_.playerOptions.canSeek_ && !this.techGet_('seeking')) {
+      this.cache_.supposedCurrentTime = this.techGet_('currentTime');
+    }
     this.trigger('timeupdate');
   }
 
@@ -1466,7 +1477,7 @@ class Player extends Component {
    * @method currentTime
    */
   currentTime(seconds) {
-    if (seconds !== undefined) {
+    if (seconds !== undefined && this.options_.playerOptions.canSeek_) {
 
       this.techCall_('setCurrentTime', seconds);
 
@@ -2391,6 +2402,19 @@ class Player extends Component {
    */
   seekable() {
     return this.techGet_('seekable');
+  }
+
+  /**
+   * Get/set if seek-bar can be seek
+   * @param  {[type]} bool [description]
+   * @return {[type]}      [description]
+   */
+  canSeek(bool) {
+    if (bool !== undefined) {
+      this.options_.playerOptions.canSeek_ = !!bool;
+    } else {
+      return this.options_.playerOptions.canSeek_;
+    }
   }
 
   /**

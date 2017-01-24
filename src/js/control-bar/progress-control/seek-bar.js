@@ -23,6 +23,7 @@ class SeekBar extends Slider {
 
   constructor(player, options) {
     super(player, options);
+    this.playerOptions = player.options_.playerOptions;
     this.on(player, 'timeupdate', this.updateProgress);
     this.on(player, 'ended', this.updateProgress);
     player.ready(Fn.bind(this, this.updateProgress));
@@ -103,12 +104,14 @@ class SeekBar extends Slider {
    * @method handleMouseDown
    */
   handleMouseDown(event) {
-    super.handleMouseDown(event);
+    if (this.playerOptions.canSeek_) {
+      super.handleMouseDown(event);
 
-    this.player_.scrubbing(true);
+      this.player_.scrubbing(true);
 
-    this.videoWasPlaying = !this.player_.paused();
-    this.player_.pause();
+      this.videoWasPlaying = !this.player_.paused();
+      this.player_.pause();
+    }
   }
 
   /**
@@ -117,15 +120,17 @@ class SeekBar extends Slider {
    * @method handleMouseMove
    */
   handleMouseMove(event) {
-    let newTime = this.calculateDistance(event) * this.player_.duration();
+    if (this.playerOptions.canSeek_) {
+      let newTime = this.calculateDistance(event) * this.player_.duration();
 
-    // Don't let video end while scrubbing.
-    if (newTime === this.player_.duration()) {
-      newTime = newTime - 0.1;
+      // Don't let video end while scrubbing.
+      if (newTime === this.player_.duration()) {
+        newTime = newTime - 0.1;
+      }
+
+      // Set new time (tell player to seek to new time)
+      this.player_.currentTime(newTime);
     }
-
-    // Set new time (tell player to seek to new time)
-    this.player_.currentTime(newTime);
   }
 
   /**
@@ -148,8 +153,10 @@ class SeekBar extends Slider {
    * @method stepForward
    */
   stepForward() {
-    // more quickly fast forward for keyboard-only users
-    this.player_.currentTime(this.player_.currentTime() + 5);
+    if (this.playerOptions.canSeek_) {
+      // more quickly fast forward for keyboard-only users
+      this.player_.currentTime(this.player_.currentTime() + 5);
+    }
   }
 
   /**
@@ -158,8 +165,10 @@ class SeekBar extends Slider {
    * @method stepBack
    */
   stepBack() {
-    // more quickly rewind for keyboard-only users
-    this.player_.currentTime(this.player_.currentTime() - 5);
+    if (this.playerOptions.canSeek_) {
+      // more quickly rewind for keyboard-only users
+      this.player_.currentTime(this.player_.currentTime() - 5);
+    }
   }
 
 }
