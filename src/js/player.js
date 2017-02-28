@@ -3002,7 +3002,9 @@ Player.prototype.options_ = {
   languages: {},
 
   // Default message to show when a video cannot be played.
-  notSupportedMessage: 'No compatible source was found for this media.'
+  notSupportedMessage: 'No compatible source was found for this media.',
+
+  canSeek_: true
 };
 
 // The following no-op expressions are here only for purposes of documentation.
