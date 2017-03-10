@@ -764,6 +764,7 @@ class Player extends Component {
     // http://stackoverflow.com/questions/1444562/javascript-onclick-event-over-flash-object
     // Any touch events are set to block the mousedown event from happening
     this.on(this.tech_, 'mousedown', this.handleTechClick_);
+    this.on(this.tech_, 'dblclick', this.handleTechDblClick_);
 
     // If the controls were hidden we don't want that to change without a tap event
     // so we'll check if the controls were already showing before reporting user
@@ -792,6 +793,7 @@ class Player extends Component {
     this.off(this.tech_, 'touchmove', this.handleTechTouchMove_);
     this.off(this.tech_, 'touchend', this.handleTechTouchEnd_);
     this.off(this.tech_, 'mousedown', this.handleTechClick_);
+    this.off(this.tech_, 'dblclick', this.handleTechDblClick_);
   }
 
   /**
@@ -1084,6 +1086,20 @@ class Player extends Component {
       } else {
         this.pause();
       }
+    }
+  }
+
+  /**
+   * Handle a doubleClick on the media element to setFullscreen or exitFullscreen
+   *
+   * @private
+   * @method handleTechDblClick_
+   */
+  handleTechDblClick_() {
+    if (!this.isFullscreen()) {
+      this.requestFullscreen();
+    } else {
+      this.exitFullscreen();
     }
   }
 
