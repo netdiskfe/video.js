@@ -155,6 +155,7 @@ class SimpleTextTrackSettings extends Component {
         let label = this.localize(track.options_.label);
         let num = 0;
         let i = 0;
+
         for (; i < label.length; i++) {
           if (label.charCodeAt(i) < 128) {
             num++;
@@ -229,6 +230,7 @@ class SimpleTextTrackSettings extends Component {
       ];
 
       const circles = this.$$('.vjs-captions-font-size .circle');
+
       for (let i = 0; i < circles.length; i++) {
         Dom.setElData(circles[i], 'range', this.ranges[i]);
       }
@@ -261,7 +263,6 @@ class SimpleTextTrackSettings extends Component {
     const uniqueId = this.id_;
     const dialogLabelId = 'TTsettingsDialogLabel-' + uniqueId;
     const dialogDescriptionId = 'TTsettingsDialogDescription-' + uniqueId;
-    const tracks = this.player_.textTracks();
 
     return super.createEl('div', {
       className: 'vjs-simple-caption-settings vjs-modal-overlay',
@@ -290,7 +291,7 @@ class SimpleTextTrackSettings extends Component {
    * @method getValues
    */
   getValues() {
-    const fontPercent = window.parseFloat(Dom.getElData(this.dragButton)['value']);
+    const fontPercent = window.parseFloat(Dom.getElData(this.dragButton).value);
     const timeAjust = window.parseFloat(Dom.textContent(this.currTimeAdjust));
 
     const result = {
@@ -330,6 +331,7 @@ class SimpleTextTrackSettings extends Component {
     }
 
     for (let i = 0; i < this.ranges.length; i++) {
+      debugger;
       if (this.ranges[i].value == fontPercent) {
         this.selectFontSize(this.ranges[i].pos);
         break;
