@@ -5,7 +5,6 @@ import TrackButton from '../track-button.js';
 import TextTrackMenuItem from './text-track-menu-item.js';
 import OffTextTrackMenuItem from './off-text-track-menu-item.js';
 import Component from '../../component.js';
-import * as Fn from '../../utils/fn.js';
 // import CaptionSettingsMenuItem from './caption-settings-menu-item.js';
 
 /**
@@ -50,7 +49,7 @@ class SimpleCaptionsButton extends TrackButton {
    * @method update
    */
   update() {
-    let threshold = 1;
+    const threshold = 1;
 
     // super.update() will finally call createItems()
     super.update();
@@ -86,7 +85,8 @@ class SimpleCaptionsButton extends TrackButton {
 
     for (let i = 0; i < tracks.length; i++) {
       const track = tracks[i];
-      let title = track.label;
+      const title = track.label;
+
       // only add tracks that are of the appropriate kind and have a label
       if (track.kind === this.kind_) {
         items.push(new TextTrackMenuItem(this.player_, {
@@ -109,7 +109,8 @@ class SimpleCaptionsButton extends TrackButton {
    * @method handleClick
    */
   handleClick() {
-    let simpleTextTrackSettings = this.player().getChild('simpleTextTrackSettings');
+    const simpleTextTrackSettings = this.player().getChild('simpleTextTrackSettings');
+
     if (simpleTextTrackSettings.isHide()) {
       simpleTextTrackSettings.show();
     } else {

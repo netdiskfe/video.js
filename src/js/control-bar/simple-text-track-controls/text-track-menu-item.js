@@ -108,19 +108,21 @@ class TextTrackMenuItem extends MenuItem {
   }
 
   createEl(type, props, attrs) {
-    let label = this.localize($.trim(this.options_.label));
+    let label = this.localize(this.options_.label);
     let num = 0;
     let i = 0;
+
     for (; i < label.length; i++) {
-        if (label.charCodeAt(i) < 128) {
-            num++;
-        } else {
-            num += 2;   // 只能输入汉字
-        }
-        if (num > 18) {
-          label = label.substring(0, i) + '...srt';
-          break;
-        }
+      if (label.charCodeAt(i) < 128) {
+        num++;
+      } else {
+        // chinese
+        num += 2;
+      }
+      if (num > 18) {
+        label = label.substring(0, i) + '...srt';
+        break;
+      }
     }
 
     return super.createEl('li', assign({

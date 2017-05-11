@@ -6,7 +6,6 @@ import * as Events from '../utils/events.js';
 import * as Fn from '../utils/fn.js';
 import * as Dom from '../utils/dom.js';
 import log from '../utils/log.js';
-import TrackList from './track-list';
 import safeParseTuple from 'safe-json-parse/tuple';
 import window from 'global/window';
 
@@ -72,37 +71,6 @@ function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId
   `;
 
   return template;
-}
-
-function getSelectedOptionValue(target) {
-  let selectedOption;
-
-  // not all browsers support selectedOptions, so, fallback to options
-  if (target.selectedOptions) {
-    selectedOption = target.selectedOptions[0];
-  } else if (target.options) {
-    selectedOption = target.options[target.options.selectedIndex];
-  }
-
-  return selectedOption.value;
-}
-
-function setSelectedOption(target, value) {
-  if (!value) {
-    return;
-  }
-
-  let i;
-
-  for (i = 0; i < target.options.length; i++) {
-    const option = target.options[i];
-
-    if (option.value === value) {
-      break;
-    }
-  }
-
-  target.selectedIndex = i;
 }
 
 /**
@@ -183,7 +151,7 @@ class SimpleTextTrackSettings extends Component {
     let target = event.target;
     this.tracks.forEach(track => {
       if (track.contentEl() === target) {
-        let label = this.localize($.trim(track.options_.label));
+        let label = this.localize(track.options_.label);
         let num = 0;
         let i = 0;
         for (; i < label.length; i++) {
@@ -219,7 +187,7 @@ class SimpleTextTrackSettings extends Component {
    * @method timeForward
    */
   timeForward() {
-    let currTime = parseFloat(Dom.textContent(this.currTimeAdjust));
+    const currTime = parseFloat(Dom.textContent(this.currTimeAdjust));
     Dom.textContent(this.currTimeAdjust, currTime + 0.5);
     this.updateDisplay();
   }
@@ -233,14 +201,14 @@ class SimpleTextTrackSettings extends Component {
   moveDragButton(event) {
     if (this.fontPercentDrag) {
       Dom.removeElClass(this.dragButton, 'ani');
-      let positionPercent = Dom.getPointerPosition(this.dragButtonParent, event);
+      const positionPercent = Dom.getPointerPosition(this.dragButtonParent, event);
       this.dragButton.style.left = parseInt(window.getComputedStyle(this.dragButtonParent).width, 10) * positionPercent.x + 'px';
     }
   }
 
   clickFontButton(event) {
-    let positionPercent = Dom.getPointerPosition(this.dragButtonParent, event);
-    let clickPos = parseInt(window.getComputedStyle(this.dragButtonParent).width, 10) * positionPercent.x;
+    const positionPercent = Dom.getPointerPosition(this.dragButtonParent, event);
+    const clickPos = parseInt(window.getComputedStyle(this.dragButtonParent).width, 10) * positionPercent.x;
 
     this.selectFontSize(clickPos);
   }
@@ -255,7 +223,7 @@ class SimpleTextTrackSettings extends Component {
         {lowmit: this.range * 5, upmit: this.range * 6, pos: 184, value: 2}
       ];
 
-      let circles = this.$$('.vjs-captions-font-size .circle');
+      const circles = this.$$('.vjs-captions-font-size .circle');
       for (let i = 0; i < circles.length; i++) {
         Dom.setElData(circles[i], 'range', this.ranges[i]);
       }

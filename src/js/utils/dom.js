@@ -135,7 +135,7 @@ export function createEl(tagName = 'div', properties = {}, attributes = {}) {
  */
 export function textContent(el, text) {
   // get
-  if (text == undefined) {
+  if (text === undefined) {
     if (typeof el.textContent === 'undefined') {
       return el.innerText;
     } else {
@@ -208,7 +208,7 @@ export function getElData(el) {
 }
 
 export function setElData(el, key, value) {
-  let data = getElData(el);
+  const data = getElData(el);
 
   data[key] = value;
   return data;

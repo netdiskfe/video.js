@@ -216,7 +216,8 @@ class TextTrackDisplay extends Component {
     }
 
     let overrides = this.player_.textTrackSettings.getValues();
-    let simpleOverrides = this.player_.getChild('simpleTextTrackSettings').getValues();
+    const simpleOverrides = this.player_.getChild('simpleTextTrackSettings').getValues();
+
     overrides = mergeOptions(overrides, simpleOverrides);
     const cues = [];
 

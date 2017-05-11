@@ -114,8 +114,8 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          'build/temp/alt/video.novtt.min.js': 'build/temp/alt/video.novtt.js',
-          'build/temp/video.min.js': 'build/temp/video.js'
+          // 'build/temp/alt/video.novtt.min.js': 'build/temp/alt/video.novtt.js',
+          // 'build/temp/video.min.js': 'build/temp/video.js'
         }
       }
     },
@@ -494,9 +494,9 @@ module.exports = function(grunt) {
   grunt.registerTask('dist', [
     'clean:dist',
     'build:dist',
-    'copy:dist',
-    'copy:examples',
-    'zip:dist'
+    'copy:dist'
+    // 'copy:examples',
+    // 'zip:dist'
   ]);
 
   grunt.registerTask('skin', ['sass', 'concat:ie8_addition']);
