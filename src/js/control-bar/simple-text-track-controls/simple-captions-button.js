@@ -93,9 +93,7 @@ class SimpleCaptionsButton extends TrackButton {
           track,
           // MenuItem is selectable
           selectable: true,
-          attrs: {
-            title: title
-          }
+          attrs: { title }
         }));
       }
     }

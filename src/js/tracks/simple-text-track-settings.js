@@ -103,28 +103,28 @@ class SimpleTextTrackSettings extends Component {
     Events.on(this.$('.vjs-captions-time-adjust .backward'), 'click', Fn.bind(this, this.timeBackward));
     Events.on(this.$('.vjs-captions-time-adjust .forward'), 'click', Fn.bind(this, this.timeForward));
 
-    Events.on(this.dragButton, 'mousedown', Fn.bind(this, function () {
+    Events.on(this.dragButton, 'mousedown', Fn.bind(this, function() {
       if (!this.fontPercentDrag) {
         this.fontPercentDrag = true;
         Events.on(this.$('.vjs-captions-font-size'), 'mousemove', Fn.bind(this, this.moveDragButton));
       }
     }));
 
-    Events.on(this.$('.vjs-captions-font-size'), 'mouseleave', Fn.bind(this, function () {
+    Events.on(this.$('.vjs-captions-font-size'), 'mouseleave', Fn.bind(this, function() {
       if (this.fontPercentDrag) {
         this.fontPercentDrag = false;
         Events.off(this.$('.vjs-captions-font-size'), 'mousemove', Fn.bind(this, this.moveDragButton));
-        let left = parseInt(this.dragButton.style.left, 10);
+        const left = parseInt(this.dragButton.style.left, 10);
 
         this.selectFontSize(left);
       }
     }));
 
-    Events.on(this.$('.vjs-captions-font-size .drag-button'), 'mouseup', Fn.bind(this, function () {
+    Events.on(this.$('.vjs-captions-font-size .drag-button'), 'mouseup', Fn.bind(this, function() {
       if (this.fontPercentDrag) {
         this.fontPercentDrag = false;
         Events.off(this.$('.vjs-captions-font-size'), 'mousemove', Fn.bind(this, this.moveDragButton));
-        let left = parseInt(this.dragButton.style.left, 10);
+        const left = parseInt(this.dragButton.style.left, 10);
 
         this.selectFontSize(left);
       }
@@ -141,29 +141,31 @@ class SimpleTextTrackSettings extends Component {
       this.updateDisplay();
     }));
 
-    Events.on(this.contentEl(), 'mouseleave', Fn.bind(this, function () {
+    Events.on(this.contentEl(), 'mouseleave', Fn.bind(this, function() {
       this.hide();
     }));
 
   }
 
   tracksSelect(event) {
-    let target = event.target;
+    const target = event.target;
+
     this.tracks.forEach(track => {
       if (track.contentEl() === target) {
         let label = this.localize(track.options_.label);
         let num = 0;
         let i = 0;
         for (; i < label.length; i++) {
-            if (label.charCodeAt(i) < 128) {
-                num++;
-            } else {
-                num += 2;   // chinese
-            }
-            if (num > 20) {
-              label = label.substring(0, i) + '...srt';
-              break;
-            }
+          if (label.charCodeAt(i) < 128) {
+            num++;
+          } else {
+            // chinese
+            num += 2;
+          }
+          if (num > 20) {
+            label = label.substring(0, i) + '...srt';
+            break;
+          }
         }
         Dom.insertContent(this.$('.vjs-track-select .current-track'), label);
       }
@@ -176,7 +178,8 @@ class SimpleTextTrackSettings extends Component {
    * @method timeBackward
    */
   timeBackward() {
-    let currTime = parseFloat(Dom.textContent(this.currTimeAdjust));
+    const currTime = parseFloat(Dom.textContent(this.currTimeAdjust));
+
     Dom.textContent(this.currTimeAdjust, currTime - 0.5);
     this.updateDisplay();
   }
@@ -188,6 +191,7 @@ class SimpleTextTrackSettings extends Component {
    */
   timeForward() {
     const currTime = parseFloat(Dom.textContent(this.currTimeAdjust));
+
     Dom.textContent(this.currTimeAdjust, currTime + 0.5);
     this.updateDisplay();
   }
@@ -202,6 +206,7 @@ class SimpleTextTrackSettings extends Component {
     if (this.fontPercentDrag) {
       Dom.removeElClass(this.dragButton, 'ani');
       const positionPercent = Dom.getPointerPosition(this.dragButtonParent, event);
+
       this.dragButton.style.left = parseInt(window.getComputedStyle(this.dragButtonParent).width, 10) * positionPercent.x + 'px';
     }
   }
