@@ -134,10 +134,20 @@ export function createEl(tagName = 'div', properties = {}, attributes = {}) {
  * @function textContent
  */
 export function textContent(el, text) {
-  if (typeof el.textContent === 'undefined') {
-    el.innerText = text;
+  // get
+  if (text == undefined) {
+    if (typeof el.textContent === 'undefined') {
+      return el.innerText;
+    } else {
+      return el.textContent;
+    }
+  // set
   } else {
-    el.textContent = text;
+    if (typeof el.textContent === 'undefined') {
+      el.innerText = text;
+    } else {
+      el.textContent = text;
+    }
   }
 }
 
@@ -195,6 +205,13 @@ export function getElData(el) {
   }
 
   return elData[id];
+}
+
+export function setElData(el, key, value) {
+  let data = getElData(el);
+
+  data[key] = value;
+  return data;
 }
 
 /**

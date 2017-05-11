@@ -207,6 +207,7 @@ export function fixEvent(event) {
  * @method on
  */
 export function on(elem, type, fn) {
+
   if (Array.isArray(type)) {
     return _handleMultipleEvents(on, elem, type, fn);
   }

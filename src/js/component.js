@@ -74,7 +74,7 @@ class Component {
     if (options.el) {
       this.el_ = options.el;
     } else if (options.createEl !== false) {
-      this.el_ = this.createEl();
+      this.el_ = this.createEl(options.type, options.props, options.attrs);
     }
 
     this.children_ = [];
@@ -971,6 +971,16 @@ class Component {
   hide() {
     this.addClass('vjs-hidden');
     return this;
+  }
+
+  /**
+   * return false if component currently showing
+   *
+   * @return {Boolean}
+   * @method isHide
+   */
+  isHide() {
+    return this.hasClass('vjs-hidden');
   }
 
   /**

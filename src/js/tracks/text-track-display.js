@@ -4,6 +4,7 @@
 import Component from '../component';
 import * as Fn from '../utils/fn.js';
 import window from 'global/window';
+import mergeOptions from '../utils/merge-options.js';
 
 const darkGray = '#222';
 const lightGray = '#ccc';
@@ -214,7 +215,9 @@ class TextTrackDisplay extends Component {
       return;
     }
 
-    const overrides = this.player_.textTrackSettings.getValues();
+    let overrides = this.player_.textTrackSettings.getValues();
+    let simpleOverrides = this.player_.getChild('simpleTextTrackSettings').getValues();
+    overrides = mergeOptions(overrides, simpleOverrides);
     const cues = [];
 
     for (let i = 0; i < track.activeCues.length; i++) {

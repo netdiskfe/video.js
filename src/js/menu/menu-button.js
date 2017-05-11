@@ -107,10 +107,8 @@ class MenuButton extends ClickableComponent {
    * @return {Element}
    * @method createEl
    */
-  createEl() {
-    return super.createEl('div', {
-      className: this.buildCSSClass()
-    });
+  createEl(tag = 'div', options = { className: this.buildCSSClass() }) {
+    return super.createEl(tag, options);
   }
 
   /**
