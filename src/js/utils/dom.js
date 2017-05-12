@@ -134,12 +134,13 @@ export function createEl(tagName = 'div', properties = {}, attributes = {}) {
  * @function textContent
  */
 export function textContent(el, text) {
+  let content;
   // get
   if (text === undefined) {
     if (typeof el.textContent === 'undefined') {
-      return el.innerText;
+      content = el.innerText;
     } else {
-      return el.textContent;
+      content = el.textContent;
     }
   // set
   } else {
@@ -149,6 +150,7 @@ export function textContent(el, text) {
       el.textContent = text;
     }
   }
+  return content || el;
 }
 
 /**

@@ -155,6 +155,7 @@
 
 .vjs-simple-caption-settings .forward-box:hover .forward-tip {
     display: block;
+    right: 0;
 }
 
 .vjs-simple-caption-settings .current-time-adjust-box {
@@ -219,7 +220,7 @@
     transition: color .3s;
 }
 
-.vjs-simple-caption-settings .vjs-captions-font-size .size-list .size-item:first-child .size-intro {
+.vjs-simple-caption-settings .vjs-captions-font-size .size-list .size-item.default .size-intro {
     color: #2e85ff;
 }
 
@@ -242,7 +243,7 @@
 .vjs-simple-caption-settings .vjs-captions-font-size .drag-button {
     position: absolute;
     top: 5px;
-    left: 0px;
+    left: 64px;
     margin-left: -3px;
     width: 18px;
     height: 18px;
@@ -274,4 +275,22 @@
     cursor: pointer;
     text-align: center;
     color: #bbbbbb;
+}
+
+/* have not tracks */
+.vjs-simple-caption-settings.havent-tracks .backward,
+.vjs-simple-caption-settings.havent-tracks .forward {
+
+}
+
+.vjs-simple-caption-settings.havent-tracks .current-time-adjust-box {
+
+}
+
+.vjs-simple-caption-settings.havent-tracks .vjs-captions-font-size .drag-button {
+
+}
+
+.vjs-simple-caption-settings.havent-tracks .vjs-captions-font-size .size-list .size-item.default .size-intro {
+
 }

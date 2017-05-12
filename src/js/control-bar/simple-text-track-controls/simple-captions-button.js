@@ -21,9 +21,13 @@ class SimpleCaptionsButton extends TrackButton {
   constructor(player, options, ready) {
 
     options.tracks = player.textTracks();
+
     super(player, options, ready);
 
     this.el_.setAttribute('aria-label', 'Simple Captions Menu');
+
+    // simple captions button will always show
+    this.show();
   }
 
   /**
@@ -39,7 +43,7 @@ class SimpleCaptionsButton extends TrackButton {
   createEl() {
     return super.createEl('div', {
       className: this.buildCSSClass(),
-      innerHTML: '字幕'
+      innerHTML: this.localize('Captions')
     });
   }
 
@@ -49,17 +53,11 @@ class SimpleCaptionsButton extends TrackButton {
    * @method update
    */
   update() {
-    const threshold = 1;
-
     // super.update() will finally call createItems()
     super.update();
 
-    if (this.items && this.items.length > threshold) {
-      this.show();
-      this.player().getChild('simpleTextTrackSettings').updateTracks(this.menu, this.items);
-    } else {
-      this.hide();
-    }
+    // update settins dialog
+    this.player().getChild('simpleTextTrackSettings').updateTracks(this.menu, this.items);
   }
 
   /**

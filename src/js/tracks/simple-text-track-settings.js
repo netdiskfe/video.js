@@ -47,7 +47,7 @@ function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId
                 <div class="circle" index=0></div>
                 <div class="size-intro">小</div>
               </li>
-              <li class="size-item middle">
+              <li class="size-item middle default">
                 <div class="circle" index=1></div>
                 <div class="size-intro">中</div>
               </li>
@@ -92,62 +92,89 @@ class SimpleTextTrackSettings extends Component {
       this.options_.persistTextTrackSettings = this.options_.playerOptions.persistTextTrackSettings;
     }
 
-    this.dragButton = this.$('.vjs-captions-font-size .drag-button');
-    this.dragButtonParent = this.$('.vjs-captions-font-size');
-    this.introList = this.$$('.vjs-captions-font-size .size-item .size-intro');
-    this.currTimeAdjust = this.$('.vjs-captions-time-adjust .current-time-adjust');
-    this.fontSizeCircles = this.$$('.vjs-captions-font-size .circle');
-
-    Events.on(this.$('.vjs-track-select'), 'click', Fn.bind(this, this.tracksSelect));
-
-    Events.on(this.$('.vjs-captions-time-adjust .backward'), 'click', Fn.bind(this, this.timeBackward));
-    Events.on(this.$('.vjs-captions-time-adjust .forward'), 'click', Fn.bind(this, this.timeForward));
-
-    Events.on(this.dragButton, 'mousedown', Fn.bind(this, function() {
-      if (!this.fontPercentDrag) {
-        this.fontPercentDrag = true;
-        Events.on(this.$('.vjs-captions-font-size'), 'mousemove', Fn.bind(this, this.moveDragButton));
-      }
-    }));
-
-    Events.on(this.$('.vjs-captions-font-size'), 'mouseleave', Fn.bind(this, function() {
-      if (this.fontPercentDrag) {
-        this.fontPercentDrag = false;
-        Events.off(this.$('.vjs-captions-font-size'), 'mousemove', Fn.bind(this, this.moveDragButton));
-        const left = parseInt(this.dragButton.style.left, 10);
-
-        this.selectFontSize(left);
-      }
-    }));
-
-    Events.on(this.$('.vjs-captions-font-size .drag-button'), 'mouseup', Fn.bind(this, function() {
-      if (this.fontPercentDrag) {
-        this.fontPercentDrag = false;
-        Events.off(this.$('.vjs-captions-font-size'), 'mousemove', Fn.bind(this, this.moveDragButton));
-        const left = parseInt(this.dragButton.style.left, 10);
-
-        this.selectFontSize(left);
-      }
-    }));
-
-    for (let i = 0; i < this.fontSizeCircles.length; i++) {
-      Events.on(this.fontSizeCircles[i], 'click', Fn.bind(this, this.clickFontButton));
-    }
-
-    // default button
-    Events.on(this.$('.vjs-default-button'), 'click', Fn.bind(this, function() {
-      this.selectFontSize(this.ranges[1].pos);
-      Dom.textContent(this.currTimeAdjust, 0);
-      this.updateDisplay();
-    }));
-
+    // dialog event
     Events.on(this.contentEl(), 'mouseleave', Fn.bind(this, function() {
       this.hide();
     }));
 
+    // track select option
+    this.trackSelectBox = this.$('.vjs-track-select');
+    this.currTrack = this.$('.vjs-track-select .current-track');
+
+    // time adjust
+    this.currTimeAdjust = this.$('.vjs-captions-time-adjust .current-time-adjust');
+    this.backward = this.$('.vjs-captions-time-adjust .backward');
+    this.forward = this.$('.vjs-captions-time-adjust .forward');
+
+    // font size percent
+    this.fontSizeBox = this.$('.vjs-captions-font-size');
+    this.dragButton = this.$('.vjs-captions-font-size .drag-button');
+    this.fontSizeCircles = this.$$('.vjs-captions-font-size .circle');
+    this.introList = this.$$('.vjs-captions-font-size .size-item .size-intro');
+
+    // default button
+    this.defaultButton = this.$('.vjs-default-button');
+
   }
 
-  tracksSelect(event) {
+  eventBind() {
+    if (!this.hasBind) {
+      this.hasBind = true;
+
+      // track select event
+      Events.on(this.trackSelectBox, 'click', Fn.bind(this, this.trackSelectFn));
+
+      // time adjust event
+      Events.on(this.backward, 'click', Fn.bind(this, this.timeBackwardFn));
+      Events.on(this.forward, 'click', Fn.bind(this, this.timeForwardFn));
+
+      // font size event
+      Events.on(this.dragButton, 'mousedown', Fn.bind(this, this.dragButtonDown));
+      Events.on(this.dragButton, 'mouseup', Fn.bind(this, this.dragButtonUp));
+
+      Events.on(this.fontSizeBox, 'mouseleave', Fn.bind(this, this.fontSizeBoxLeave));
+
+      for (let i = 0; i < this.fontSizeCircles.length; i++) {
+        Events.on(this.fontSizeCircles[i], 'click', Fn.bind(this, this.clickFontButton));
+      }
+
+      // default button
+      Events.on(this.defaultButton, 'click', Fn.bind(this, this.resetDefault));
+    }
+  }
+
+  /**
+   * remove all event
+   *
+   * @method eventUnbind
+   */
+  eventUnbind() {
+    if (this.hasBind) {
+      this.hasBind = false;
+
+      // track select event
+      Events.off(this.trackSelectBox, 'click');
+
+      // time adjust event
+      Events.off(this.backward, 'click');
+      Events.off(this.forward, 'click');
+
+      // font size event
+      Events.off(this.dragButton, 'mousedown');
+      Events.off(this.dragButton, 'mouseup');
+
+      Events.off(this.fontSizeBox, 'mouseleave');
+
+      for (let i = 0; i < this.fontSizeCircles.length; i++) {
+        Events.off(this.fontSizeCircles[i], 'click');
+      }
+
+      // default button
+      Events.off(this.defaultButton, 'click');
+    }
+  }
+
+  trackSelectFn(event) {
     const target = event.target;
 
     this.tracks.forEach(track => {
@@ -168,7 +195,7 @@ class SimpleTextTrackSettings extends Component {
             break;
           }
         }
-        Dom.insertContent(this.$('.vjs-track-select .current-track'), label);
+        Dom.insertContent(this.currTrack, label);
       }
     });
   }
@@ -178,7 +205,7 @@ class SimpleTextTrackSettings extends Component {
    *
    * @method timeBackward
    */
-  timeBackward() {
+  timeBackwardFn() {
     const currTime = parseFloat(Dom.textContent(this.currTimeAdjust));
 
     Dom.textContent(this.currTimeAdjust, currTime - 0.5);
@@ -190,52 +217,59 @@ class SimpleTextTrackSettings extends Component {
    *
    * @method timeForward
    */
-  timeForward() {
+  timeForwardFn() {
     const currTime = parseFloat(Dom.textContent(this.currTimeAdjust));
 
     Dom.textContent(this.currTimeAdjust, currTime + 0.5);
     this.updateDisplay();
   }
 
+  dragButtonDown() {
+    if (!this.fontPercentDrag) {
+      this.fontPercentDrag = true;
+      Events.on(this.fontSizeBox, 'mousemove', Fn.bind(this, this.dragButtonMove));
+    }
+  }
+
+  dragButtonUp() {
+    if (this.fontPercentDrag) {
+      this.fontPercentDrag = false;
+      Events.off(this.fontSizeBox, 'mousemove', Fn.bind(this, this.dragButtonMove));
+      const left = parseInt(this.dragButton.style.left, 10);
+
+      this.selectFontSize(left);
+    }
+  }
+
   /**
    * event function of drag button move
    *
    * @param  {Object} event native event of mousemove
-   * @method moveDragButton
+   * @method dragButtonMove
    */
-  moveDragButton(event) {
+  dragButtonMove(event) {
     if (this.fontPercentDrag) {
       Dom.removeElClass(this.dragButton, 'ani');
-      const positionPercent = Dom.getPointerPosition(this.dragButtonParent, event);
+      const positionPercent = Dom.getPointerPosition(this.fontSizeBox, event);
 
-      this.dragButton.style.left = parseInt(window.getComputedStyle(this.dragButtonParent).width, 10) * positionPercent.x + 'px';
+      this.dragButton.style.left = parseInt(window.getComputedStyle(this.fontSizeBox).width, 10) * positionPercent.x + 'px';
     }
   }
 
   clickFontButton(event) {
-    const positionPercent = Dom.getPointerPosition(this.dragButtonParent, event);
-    const clickPos = parseInt(window.getComputedStyle(this.dragButtonParent).width, 10) * positionPercent.x;
+    const positionPercent = Dom.getPointerPosition(this.fontSizeBox, event);
+    const clickPos = parseInt(window.getComputedStyle(this.fontSizeBox).width, 10) * positionPercent.x;
 
     this.selectFontSize(clickPos);
   }
 
-  calculateRanges() {
-    if (!this.ranges) {
-      this.range = parseInt(window.getComputedStyle(this.dragButtonParent).width, 10) / 6;
-      this.ranges = [
-        {lowmit: 0, upmit: this.range, pos: 0, value: 0.75},
-        {lowmit: this.range, upmit: this.range * 3, pos: 64, value: 1},
-        {lowmit: this.range * 3, upmit: this.range * 5, pos: 124, value: 1.5},
-        {lowmit: this.range * 5, upmit: this.range * 6, pos: 184, value: 2}
-      ];
+  fontSizeBoxLeave() {
+    if (this.fontPercentDrag) {
+      this.fontPercentDrag = false;
+      Events.off(this.fontSizeBox, 'mousemove', Fn.bind(this, this.dragButtonMove));
+      const left = parseInt(this.dragButton.style.left, 10);
 
-      const circles = this.$$('.vjs-captions-font-size .circle');
-
-      for (let i = 0; i < circles.length; i++) {
-        Dom.setElData(circles[i], 'range', this.ranges[i]);
-      }
-
-      this.restoreSettings();
+      this.selectFontSize(left);
     }
   }
 
@@ -250,6 +284,32 @@ class SimpleTextTrackSettings extends Component {
       } else {
         this.introList[i].style.color = '#fff';
       }
+    }
+  }
+
+  resetDefault() {
+    this.selectFontSize(this.ranges[1].pos);
+    Dom.textContent(this.currTimeAdjust, 0);
+    this.updateDisplay();
+  }
+
+  /**
+   * prepare ranges for font size options
+   *
+   * @return {Element}
+   * @method calculateRanges
+   */
+  calculateRanges() {
+    if (!this.ranges) {
+      this.range = parseInt(window.getComputedStyle(this.fontSizeBox).width, 10) / 6;
+      this.ranges = [
+        {lowmit: 0, upmit: this.range, pos: 0, value: 0.75},
+        {lowmit: this.range, upmit: this.range * 3, pos: 64, value: 1},
+        {lowmit: this.range * 3, upmit: this.range * 5, pos: 124, value: 1.5},
+        {lowmit: this.range * 5, upmit: this.range * 6, pos: 184, value: 2}
+      ];
+
+      this.restoreSettings();
     }
   }
 
@@ -277,15 +337,7 @@ class SimpleTextTrackSettings extends Component {
 
   /**
    * Get texttrack settings
-   * Settings are
-   * .vjs-edge-style
-   * .vjs-font-family
-   * .vjs-fg-color
-   * .vjs-text-opacity
-   * .vjs-bg-color
-   * .vjs-bg-opacity
-   * .window-color
-   * .vjs-window-opacity
+   * Settings are font size percent and time adjust
    *
    * @return {Object}
    * @method getValues
@@ -309,30 +361,17 @@ class SimpleTextTrackSettings extends Component {
 
   /**
    * Set texttrack settings
-   * Settings are
-   * .vjs-edge-style
-   * .vjs-font-family
-   * .vjs-fg-color
-   * .vjs-text-opacity
-   * .vjs-bg-color
-   * .vjs-bg-opacity
-   * .window-color
-   * .vjs-window-opacity
+   * Settings are font size percent and time adjust
    *
    * @param {Object} values Object with texttrack setting values
    * @method setValues
    */
   setValues(values) {
 
-    let fontPercent = values.fontPercent;
-
-    if (fontPercent) {
-      fontPercent = fontPercent.toFixed(2);
-    }
+    const fontPercent = values.fontPercent;
 
     for (let i = 0; i < this.ranges.length; i++) {
-      debugger;
-      if (this.ranges[i].value == fontPercent) {
+      if (this.ranges[i].value === fontPercent) {
         this.selectFontSize(this.ranges[i].pos);
         break;
       }
@@ -416,9 +455,22 @@ class SimpleTextTrackSettings extends Component {
    * @return {[type]}        nothing
    */
   updateTracks(menu, tracks) {
+    const threshold = 1;
+
     this.tracks = tracks;
-    Dom.insertContent(this.$('.tracks-pop-list-box'), menu.contentEl());
-    this.calculateRanges();
+
+    // first track is No Tracks
+    if (this.tracks && this.tracks.length > threshold) {
+      Dom.insertContent(this.$('.vjs-track-select .current-track'), this.localize('No Track'));
+      Dom.insertContent(this.$('.tracks-pop-list-box'), menu.contentEl());
+      this.calculateRanges();
+      this.eventBind();
+      this.removeClass('havent-tracks');
+    } else {
+      Dom.insertContent(this.$('.vjs-track-select .current-track'), this.localize('Have not Track'));
+      this.eventUnbind();
+      this.addClass('havent-tracks');
+    }
   }
 
 }

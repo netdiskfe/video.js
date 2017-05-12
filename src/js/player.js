@@ -3008,10 +3008,10 @@ Player.prototype.options_ = {
     'textTrackDisplay',
     'loadingSpinner',
     'bigPlayButton',
+    'simpleTextTrackSettings',
     'controlBar',
     'errorDisplay',
-    'textTrackSettings',
-    'simpleTextTrackSettings'
+    'textTrackSettings'
   ],
 
   language: navigator && (navigator.languages && navigator.languages[0] || navigator.userLanguage || navigator.language) || 'en',
