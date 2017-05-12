@@ -134,23 +134,32 @@ export function createEl(tagName = 'div', properties = {}, attributes = {}) {
  * @function textContent
  */
 export function textContent(el, text) {
-  let content;
-  // get
-  if (text === undefined) {
-    if (typeof el.textContent === 'undefined') {
-      content = el.innerText;
-    } else {
-      content = el.textContent;
-    }
-  // set
+
+  if (typeof el.textContent === 'undefined') {
+    el.innerText = text;
   } else {
-    if (typeof el.textContent === 'undefined') {
-      el.innerText = text;
-    } else {
-      el.textContent = text;
-    }
+    el.textContent = text;
   }
-  return content || el;
+
+}
+
+/**
+ * Get text into an element
+ *
+ * @param  {Element} el
+ * @return {Element}
+ * @function textContentGet
+ */
+export function textContentGet(el) {
+  let text;
+
+  if (typeof el.textContent === 'undefined') {
+    text = el.innerText;
+  } else {
+    text = el.textContent;
+  }
+
+  return text;
 }
 
 /**

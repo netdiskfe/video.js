@@ -24,7 +24,7 @@ function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId
             </div>
           </div>
         </div>
-        <div class="vjs-settings-item">
+        <div class="vjs-settings-item time-adjust-settings-item">
           <label class="vjs-label" for="captions-time-adjust-${uniqueId}">${this.localize('Time Ajust')}</label>
           <div id="captions-time-adjust-${uniqueId}" class="vjs-captions-time-adjust vjs-setting-box">
             <div class="backward-box">
@@ -38,7 +38,7 @@ function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId
             </div>
           </div>
         </div>
-        <div class="vjs-settings-item">
+        <div class="vjs-settings-item font-size-settings-item">
           <label class="vjs-label" for="captions-font-size-${uniqueId}">${this.localize('Font Size')}</label>
           <div id="captions-font-size-${uniqueId}" class="vjs-captions-font-size vjs-setting-box">
             <div class="line"></div>
@@ -174,6 +174,11 @@ class SimpleTextTrackSettings extends Component {
     }
   }
 
+  /**
+   * select track
+   *
+   * @method trackSelectFn
+   */
   trackSelectFn(event) {
     const target = event.target;
 
@@ -206,7 +211,7 @@ class SimpleTextTrackSettings extends Component {
    * @method timeBackward
    */
   timeBackwardFn() {
-    const currTime = parseFloat(Dom.textContent(this.currTimeAdjust));
+    const currTime = parseFloat(Dom.textContentGet(this.currTimeAdjust));
 
     Dom.textContent(this.currTimeAdjust, currTime - 0.5);
     this.updateDisplay();
@@ -218,12 +223,17 @@ class SimpleTextTrackSettings extends Component {
    * @method timeForward
    */
   timeForwardFn() {
-    const currTime = parseFloat(Dom.textContent(this.currTimeAdjust));
+    const currTime = parseFloat(Dom.textContentGet(this.currTimeAdjust));
 
     Dom.textContent(this.currTimeAdjust, currTime + 0.5);
     this.updateDisplay();
   }
 
+  /**
+   * font size button down event, then listening mousemove
+   *
+   * @method timeForward
+   */
   dragButtonDown() {
     if (!this.fontPercentDrag) {
       this.fontPercentDrag = true;
@@ -231,6 +241,11 @@ class SimpleTextTrackSettings extends Component {
     }
   }
 
+  /**
+   * font size button up event, then cancel listening mousemove
+   *
+   * @method timeForward
+   */
   dragButtonUp() {
     if (this.fontPercentDrag) {
       this.fontPercentDrag = false;
@@ -256,6 +271,12 @@ class SimpleTextTrackSettings extends Component {
     }
   }
 
+  /**
+   * direct select size
+   *
+   * @param  {Event} event  native event
+   * @method clickFontButton
+   */
   clickFontButton(event) {
     const positionPercent = Dom.getPointerPosition(this.fontSizeBox, event);
     const clickPos = parseInt(window.getComputedStyle(this.fontSizeBox).width, 10) * positionPercent.x;
@@ -263,6 +284,11 @@ class SimpleTextTrackSettings extends Component {
     this.selectFontSize(clickPos);
   }
 
+  /**
+   * mouse leave font size box
+   *
+   * @method fontSizeBoxLeave
+   */
   fontSizeBoxLeave() {
     if (this.fontPercentDrag) {
       this.fontPercentDrag = false;
@@ -273,6 +299,11 @@ class SimpleTextTrackSettings extends Component {
     }
   }
 
+  /**
+   * select font size
+   *
+   * @method selectFontSize
+   */
   selectFontSize(pos) {
     Dom.addElClass(this.dragButton, 'ani');
     for (let i = 0; i < this.ranges.length; i++) {
@@ -287,6 +318,11 @@ class SimpleTextTrackSettings extends Component {
     }
   }
 
+  /**
+   * back to default
+   *
+   * @method resetDefault
+   */
   resetDefault() {
     this.selectFontSize(this.ranges[1].pos);
     Dom.textContent(this.currTimeAdjust, 0);
@@ -344,7 +380,7 @@ class SimpleTextTrackSettings extends Component {
    */
   getValues() {
     const fontPercent = window.parseFloat(Dom.getElData(this.dragButton).value);
-    const timeAjust = window.parseFloat(Dom.textContent(this.currTimeAdjust));
+    const timeAjust = window.parseFloat(Dom.textContentGet(this.currTimeAdjust));
 
     const result = {
       fontPercent,

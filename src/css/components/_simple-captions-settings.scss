@@ -5,7 +5,7 @@
     width: 320px;
     height: 290px;
     background-color: #000;
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: rgba(0, 0, 0, 0.75);
     color: $primary-foreground-color;
     padding: 25px;
     font-size: 14px;
@@ -128,6 +128,7 @@
 .vjs-simple-caption-settings .forward {
     width: 30px;
     height: 30px;
+    padding: 0;
     line-height: 1;
     background-color: rgba(21, 21, 21, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -145,8 +146,16 @@
 .vjs-simple-caption-settings .forward-tip {
     display: none;
     position: absolute;
-    width: 4em;
+    top: 35px;
+    left: 50%;
+    width: 60px;
+    height: 30px;
+    margin-left: -30px;
+    background-color: #2970d6;
     font-size: 12px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 3px;
 }
 
 .vjs-simple-caption-settings .backward-box:hover .backward-tip {
@@ -155,7 +164,6 @@
 
 .vjs-simple-caption-settings .forward-box:hover .forward-tip {
     display: block;
-    right: 0;
 }
 
 .vjs-simple-caption-settings .current-time-adjust-box {
@@ -277,20 +285,30 @@
     color: #bbbbbb;
 }
 
+
 /* have not tracks */
+.vjs-simple-caption-settings.havent-tracks .time-adjust-settings-item,
+.vjs-simple-caption-settings.havent-tracks .font-size-settings-item,
+.vjs-simple-caption-settings.havent-tracks .vjs-default-button-box {
+    /* older safari/Chrome browsers */
+    -webkit-opacity: 0.3;
+    /* Netscape and Older than Firefox 0.9 */
+    -moz-opacity: 0.3;
+    /* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*/
+    -khtml-opacity: 0.3;
+    /* IE9 + etc...modern browsers */
+    opacity: .3;
+    /* IE 4-9 */
+    filter:alpha(opacity=30);
+}
+
 .vjs-simple-caption-settings.havent-tracks .backward,
-.vjs-simple-caption-settings.havent-tracks .forward {
-
+.vjs-simple-caption-settings.havent-tracks .forward,
+.vjs-simple-caption-settings.havent-tracks .vjs-default-button {
+    cursor: default;
 }
 
-.vjs-simple-caption-settings.havent-tracks .current-time-adjust-box {
-
-}
-
-.vjs-simple-caption-settings.havent-tracks .vjs-captions-font-size .drag-button {
-
-}
-
-.vjs-simple-caption-settings.havent-tracks .vjs-captions-font-size .size-list .size-item.default .size-intro {
-
+.vjs-simple-caption-settings.havent-tracks .backward-box:hover .backward-tip,
+.vjs-simple-caption-settings.havent-tracks .forward-box:hover .forward-tip {
+    display: none;
 }
