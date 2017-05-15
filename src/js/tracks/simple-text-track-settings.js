@@ -8,10 +8,11 @@ import * as Dom from '../utils/dom.js';
 import log from '../utils/log.js';
 import safeParseTuple from 'safe-json-parse/tuple';
 import window from 'global/window';
+import document from 'global/document';
 
 function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId) {
   const template = `
-    <div role="document" name="Loliner">
+    <div role="document">
       <div role="heading" aria-level="1" id="${dialogLabelId}" class="vjs-control-text">Captions Settings Dialog</div>
       <div id="${dialogDescriptionId}" class="vjs-control-text">Beginning of dialog window. Escape will cancel and close the window.</div>
       <div class="vjs-simpletracksettings">
@@ -93,13 +94,26 @@ class SimpleTextTrackSettings extends Component {
     }
 
     // dialog event
-    Events.on(this.contentEl(), 'mouseleave', Fn.bind(this, function() {
+    Events.on(this.contentEl(), 'mouseleave', Fn.bind(this, function(event) {
       this.hide();
+    }));
+
+    Events.on(document, 'click', Fn.bind(this, function(event) {
+      const simpleCaptionsButton = this.player().getChild('controlBar').getChild('simpleCaptionsButton');
+
+      if (!this.isHide() &&
+        !Dom.contains(this.contentEl(), event.target) &&
+        this.contentEl() !== event.target &&
+        !Dom.contains(simpleCaptionsButton.contentEl(), event.target) &&
+        simpleCaptionsButton.contentEl() !== event.target) {
+        this.hide();
+      }
     }));
 
     // track select option
     this.trackSelectBox = this.$('.vjs-track-select');
     this.currTrack = this.$('.vjs-track-select .current-track');
+    this.tracksList = this.$('.vjs-track-select .tracks-pop-list-box');
 
     // time adjust
     this.currTimeAdjust = this.$('.vjs-captions-time-adjust .current-time-adjust');
@@ -115,6 +129,9 @@ class SimpleTextTrackSettings extends Component {
     // default button
     this.defaultButton = this.$('.vjs-default-button');
 
+    // force prevent main view hidden before this settings dialog hidden
+    this.player().forceActiveComponents.push(this);
+
   }
 
   eventBind() {
@@ -123,6 +140,18 @@ class SimpleTextTrackSettings extends Component {
 
       // track select event
       Events.on(this.trackSelectBox, 'click', Fn.bind(this, this.trackSelectFn));
+      Events.on(this.currTrack, 'mouseenter', Fn.bind(this, function() {
+        this.tracksList.style.display = 'block';
+      }));
+      Events.on(this.currTrack, 'mouseleave', Fn.bind(this, function() {
+        this.tracksList.style.display = 'none';
+      }));
+      Events.on(this.tracksList, 'mouseenter', Fn.bind(this, function() {
+        this.tracksList.style.display = 'block';
+      }));
+      Events.on(this.tracksList, 'mouseleave', Fn.bind(this, function() {
+        this.tracksList.style.display = 'none';
+      }));
 
       // time adjust event
       Events.on(this.backward, 'click', Fn.bind(this, this.timeBackwardFn));
@@ -201,6 +230,7 @@ class SimpleTextTrackSettings extends Component {
           }
         }
         Dom.insertContent(this.currTrack, label);
+        this.tracksList.style.display = 'none';
       }
     });
   }

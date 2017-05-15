@@ -83,7 +83,7 @@
 }
 
 .vjs-simple-caption-settings .vjs-track-select:hover .tracks-pop-list-box {
-    display: block;
+    /* display: block; */
 }
 
 .vjs-simple-caption-settings .vjs-track-select:hover .vjs-menu-content li {
@@ -216,6 +216,7 @@
     border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     background-color: #1e1d1c;
+    cursor: pointer;
 }
 
 .vjs-simple-caption-settings .vjs-captions-font-size .size-list .size-item .size-intro {
@@ -258,6 +259,7 @@
     border: 3px solid rgba(1, 68, 162, 0.64);
     border-radius: 50%;
     background-color: #2e85ff;
+    cursor: pointer;
 }
 
 .vjs-simple-caption-settings .vjs-captions-font-size .drag-button.ani {
@@ -287,6 +289,7 @@
 
 
 /* have not tracks */
+
 .vjs-simple-caption-settings.havent-tracks .time-adjust-settings-item,
 .vjs-simple-caption-settings.havent-tracks .font-size-settings-item,
 .vjs-simple-caption-settings.havent-tracks .vjs-default-button-box {
@@ -299,7 +302,7 @@
     /* IE9 + etc...modern browsers */
     opacity: .3;
     /* IE 4-9 */
-    filter:alpha(opacity=30);
+    filter: alpha(opacity=30);
 }
 
 .vjs-simple-caption-settings.havent-tracks .backward,
@@ -312,3 +315,29 @@
 .vjs-simple-caption-settings.havent-tracks .forward-box:hover .forward-tip {
     display: none;
 }
+
+.vjs-simple-caption-settings.havent-tracks .vjs-captions-font-size .circle,
+.vjs-simple-caption-settings.havent-tracks .vjs-captions-font-size .drag-button {
+    cursor: default;
+}
+
+/* hiden show */
+
+.vjs-has-started .vjs-simple-caption-settings {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition: visibility 0.1s, opacity 0.1s;
+    -moz-transition: visibility 0.1s, opacity 0.1s;
+    -o-transition: visibility 0.1s, opacity 0.1s;
+    transition: visibility 0.1s, opacity 0.1s;
+}
+
+.vjs-has-started.vjs-user-inactive.vjs-playing .vjs-simple-caption-settings {
+    visibility: visible;
+    opacity: 0;
+    -webkit-transition: visibility 1s, opacity 1s;
+    -moz-transition: visibility 1s, opacity 1s;
+    -o-transition: visibility 1s, opacity 1s;
+    transition: visibility 1s, opacity 1s;
+}
+

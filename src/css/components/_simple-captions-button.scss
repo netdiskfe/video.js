@@ -5,3 +5,7 @@
 .video-js .vjs-simple-captions-button:hover {
     text-shadow: 0px 0px 15px #fff;
 }
+
+.video-js .vjs-control-bar .vjs-simple-captions-button:hover .vjs-menu {
+    display: none;
+}

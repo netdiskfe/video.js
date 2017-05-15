@@ -162,6 +162,9 @@ class Player extends Component {
     // Set controls
     this.controls_ = !!options.controls;
 
+    // force to prevent main view hidden before these child components hiden
+    this.forceActiveComponents = [];
+
     // Original tag settings stored in options
     // now remove immediately so native controls don't flash.
     // May be turned back on by HTML5 tech if nativeControlsForTouch is true
@@ -2454,6 +2457,15 @@ class Player extends Component {
   userActive(bool) {
     if (bool !== undefined) {
       bool = !!bool;
+      // check if there still a child component show, that mean user active
+      if (this.forceActiveComponents.length) {
+        for (let i = 0; i < this.forceActiveComponents.length; i++) {
+          if (!this.forceActiveComponents[i].isHide()) {
+            bool = true;
+            break;
+          }
+        }
+      }
       if (bool !== this.userActive_) {
         this.userActive_ = bool;
         if (bool) {
@@ -3022,6 +3034,7 @@ Player.prototype.options_ = {
   // Default message to show when a video cannot be played.
   notSupportedMessage: 'No compatible source was found for this media.',
 
+  // is the progressBar can be seek?
   canSeek_: true
 };
 

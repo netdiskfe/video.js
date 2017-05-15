@@ -639,6 +639,49 @@ export function insertContent(el, content) {
 }
 
 /**
+ * Element contains another
+ * Purposefully does not implement inclusive descendent
+ * As in, an element does not contain itself
+ *
+ * copy from Sizzle
+ *
+ * @function contains
+ * @param    {Element} node A
+ * @param    {Element} node B
+ *
+ * @return   {Boolean} is A contains ?
+ */
+export function contains(nodeA, nodeB) {
+  const docEl = document.documentElement;
+  let fn;
+
+  if (/^[^{]+\{\s*\[native \w/.test(docEl.contains) || docEl.compareDocumentPosition) {
+    fn = function(a, b) {
+      const adown = a.nodeType === 9 ? a.documentElement : a;
+      const bup = b && b.parentNode;
+
+      return a === bup || !!(bup && bup.nodeType === 1 && (
+        adown.contains ?
+          adown.contains(bup) :
+          a.compareDocumentPosition && a.compareDocumentPosition(bup) & 16
+        ));
+    };
+  } else {
+    fn = function(a, b) {
+      if (b) {
+        while ((b = b.parentNode)) {
+          if (b === a) {
+            return true;
+          }
+        }
+      }
+      return false;
+    };
+  }
+  return fn(nodeA, nodeB);
+}
+
+/**
  * Finds a single DOM element matching `selector` within the optional
  * `context` of another DOM element (defaulting to `document`).
  *
