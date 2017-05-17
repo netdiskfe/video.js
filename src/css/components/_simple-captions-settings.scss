@@ -1,11 +1,11 @@
 .vjs-simple-caption-settings {
     position: absolute;
-    right: 5em;
+    right: 6em;
     bottom: 4em;
     width: 320px;
     height: 290px;
     background-color: #000;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(29, 29, 29, 0.85);
     color: $primary-foreground-color;
     padding: 25px;
     font-size: 14px;
@@ -35,7 +35,6 @@
 .vjs-simple-caption-settings .vjs-setting-box {
     width: 195px;
     height: 30px;
-    line-height: 30px;
     float: right;
 }
 
@@ -55,6 +54,15 @@
     /* for IE9+, Firefox 4+, Opera, Chrome */
     border-radius: 3px;
     color: #2970d6;
+    line-height: 26px;
+}
+
+.vjs-simple-caption-settings .current-track:before {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    font-size: 22px;
+    color: #bbb;
 }
 
 .vjs-simple-caption-settings .tracks-pop-list-box {
@@ -70,10 +78,10 @@
     overflow-y: scroll;
     position: relative;
     width: 205px;
-    height: 140px;
+    max-height: 150px;
     list-style: none;
     padding: 0;
-    background-color: rgba(4, 4, 3, 0.7);
+    background-color: rgba(4, 4, 3, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.3);
     -webkit-background-clip: padding-box;
     /* for Safari */
@@ -86,7 +94,7 @@
     /* display: block; */
 }
 
-.vjs-simple-caption-settings .vjs-track-select:hover .vjs-menu-content li {
+.vjs-simple-caption-settings .vjs-track-select .vjs-menu-content li {
     position: relative;
     height: 45px;
     line-height: 45px;
@@ -96,13 +104,14 @@
     font-weight: normal;
     font-style: normal;
     outline: none;
+    color: #ddd;
 }
 
-.vjs-simple-caption-settings .vjs-track-select:hover .vjs-menu-content li.vjs-selected {
+.vjs-simple-caption-settings .vjs-track-select .vjs-menu-content li.vjs-selected {
     color: #2970d6;
 }
 
-.vjs-simple-caption-settings .vjs-track-select:hover .vjs-menu-content li.vjs-selected:before {
+.vjs-simple-caption-settings .vjs-track-select .vjs-menu-content li.vjs-selected:before {
     position: absolute;
     right: 12px;
     content: "\f11f";
@@ -140,6 +149,29 @@
     cursor: pointer;
     text-align: center;
     outline: none;
+}
+
+.vjs-simple-caption-settings .backward:before,
+.vjs-simple-caption-settings .forward:before {
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    font-size: 18px;
+    color: #bbb;
+}
+
+.vjs-simple-caption-settings .backward-box:hover,
+.vjs-simple-caption-settings .forward-box:hover {
+    /* older safari/Chrome browsers */
+    -webkit-opacity: 0.8;
+    /* Netscape and Older than Firefox 0.9 */
+    -moz-opacity: 0.8;
+    /* Safari 1.x (pre WebKit!) 老式khtml内核的Safari浏览器*/
+    -khtml-opacity: 0.8;
+    /* IE9 + etc...modern browsers */
+    opacity: .8;
+    /* IE 4-9 */
+    filter: alpha(opacity=80);
 }
 
 .vjs-simple-caption-settings .backward-tip,
@@ -221,11 +253,11 @@
 
 .vjs-simple-caption-settings .vjs-captions-font-size .size-list .size-item .size-intro {
     position: absolute;
-    top: 20px;
+    top: 25px;
     left: 0;
     width: 50px;
     text-align: center;
-    color: #fff;
+    color: #bbb;
     transition: color .3s;
 }
 
@@ -256,7 +288,7 @@
     margin-left: -3px;
     width: 18px;
     height: 18px;
-    border: 3px solid rgba(1, 68, 162, 0.64);
+    border: 3px solid rgba(1, 68, 162, 0.80);
     border-radius: 50%;
     background-color: #2e85ff;
     cursor: pointer;
@@ -284,7 +316,7 @@
     border-radius: 3px;
     cursor: pointer;
     text-align: center;
-    color: #bbbbbb;
+    color: #bbb;
 }
 
 

@@ -19,7 +19,7 @@ function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId
         <div class="vjs-settings-item">
           <label class="vjs-label" for="track-select-${uniqueId}">${this.localize('Current Text Track')}</label>
           <div id="track-select-${uniqueId}" class="vjs-track-select vjs-setting-box">
-            <div class="current-track">${this.localize('No Track')}</div>
+            <div class="current-track vjs-icon-dropdown">${this.localize('No Track')}</div>
             <div class="tracks-pop-list-box">
               <!-- track-list -->
             </div>
@@ -29,12 +29,12 @@ function captionOptionsMenuTemplate(uniqueId, dialogLabelId, dialogDescriptionId
           <label class="vjs-label" for="captions-time-adjust-${uniqueId}">${this.localize('Time Ajust')}</label>
           <div id="captions-time-adjust-${uniqueId}" class="vjs-captions-time-adjust vjs-setting-box">
             <div class="backward-box">
-              <button class="backward">-</button>
+              <button class="backward vjs-icon-remove"></button>
               <div class="backward-tip">${this.localize('Track backward')}</div>
             </div>
             <div class="current-time-adjust-box"><span class="current-time-adjust">0</span>${this.localize('seconds')}</div>
             <div class="forward-box">
-              <button class="forward">+</button>
+              <button class="forward vjs-icon-add"></button>
               <div class="forward-tip">${this.localize('Track forward')}</div>
             </div>
           </div>
@@ -141,16 +141,16 @@ class SimpleTextTrackSettings extends Component {
       // track select event
       Events.on(this.trackSelectBox, 'click', Fn.bind(this, this.trackSelectFn));
       Events.on(this.currTrack, 'mouseenter', Fn.bind(this, function() {
-        this.tracksList.style.display = 'block';
+        this.tracksListDisplay(true);
       }));
       Events.on(this.currTrack, 'mouseleave', Fn.bind(this, function() {
-        this.tracksList.style.display = 'none';
+        this.tracksListDisplay(false);
       }));
       Events.on(this.tracksList, 'mouseenter', Fn.bind(this, function() {
-        this.tracksList.style.display = 'block';
+        this.tracksListDisplay(true);
       }));
       Events.on(this.tracksList, 'mouseleave', Fn.bind(this, function() {
-        this.tracksList.style.display = 'none';
+        this.tracksListDisplay(false);
       }));
 
       // time adjust event
@@ -224,13 +224,13 @@ class SimpleTextTrackSettings extends Component {
             // chinese
             num += 2;
           }
-          if (num > 20) {
+          if (num > 16) {
             label = label.substring(0, i) + '...srt';
             break;
           }
         }
         Dom.insertContent(this.currTrack, label);
-        this.tracksList.style.display = 'none';
+        this.tracksListDisplay(false);
       }
     });
   }
@@ -343,7 +343,7 @@ class SimpleTextTrackSettings extends Component {
         this.updateDisplay();
         this.introList[i].style.color = '#2e85ff';
       } else {
-        this.introList[i].style.color = '#fff';
+        this.introList[i].style.color = '#bbb';
       }
     }
   }
@@ -527,15 +527,36 @@ class SimpleTextTrackSettings extends Component {
 
     // first track is No Tracks
     if (this.tracks && this.tracks.length > threshold) {
+      this.removeClass('havent-tracks');
       Dom.insertContent(this.$('.vjs-track-select .current-track'), this.localize('No Track'));
       Dom.insertContent(this.$('.tracks-pop-list-box'), menu.contentEl());
+      Dom.addElClass(this.currTrack, 'vjs-icon-dropdown');
       this.calculateRanges();
       this.eventBind();
-      this.removeClass('havent-tracks');
     } else {
-      Dom.insertContent(this.$('.vjs-track-select .current-track'), this.localize('Have not Track'));
-      this.eventUnbind();
       this.addClass('havent-tracks');
+      Dom.insertContent(this.$('.vjs-track-select .current-track'), this.localize('Have not Track'));
+      Dom.removeElClass(this.currTrack, 'vjs-icon-dropdown');
+      Dom.removeElClass(this.currTrack, 'vjs-icon-dropup');
+      this.eventUnbind();
+    }
+  }
+
+  /**
+   * show or hidetracks pop list
+   *
+   * @param  {Boolean} show  show or hide
+   * @return {[type]}        nothing
+   */
+  tracksListDisplay(show) {
+    if (show) {
+      Dom.addElClass(this.currTrack, 'vjs-icon-dropup');
+      Dom.removeElClass(this.currTrack, 'vjs-icon-dropdown');
+      this.tracksList.style.display = 'block';
+    } else {
+      Dom.addElClass(this.currTrack, 'vjs-icon-dropdown');
+      Dom.removeElClass(this.currTrack, 'vjs-icon-dropup');
+      this.tracksList.style.display = 'none';
     }
   }
 
