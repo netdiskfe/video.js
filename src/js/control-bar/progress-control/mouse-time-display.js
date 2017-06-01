@@ -63,7 +63,16 @@ class MouseTimeDisplay extends Component {
   }
 
   update(newTime, position) {
-    const time = formatTime(newTime, this.player_.duration());
+    const duration = this.player_.duration();
+    let time = '';
+
+    if (newTime === Infinity || duration === Infinity) {
+      time = '视频转码中，请稍后...';
+      Dom.addElClass(this.el(), 'vjs-progress-transcoding');
+    } else {
+      time = formatTime(newTime, this.player_.duration());
+      Dom.removeElClass(this.el(), 'vjs-progress-transcoding');
+    }
 
     this.el().style.left = position + 'px';
     this.el().setAttribute('data-current-time', time);

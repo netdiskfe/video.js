@@ -178,3 +178,8 @@
   color: #fff;
   @include background-color-with-alpha(#000, 0.8);
 }
+
+.video-js .vjs-progress-control .vjs-mouse-display.vjs-progress-transcoding:after {
+  width: 9rem;
+  margin-right: -3rem;
+}
